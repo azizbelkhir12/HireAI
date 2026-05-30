@@ -1,0 +1,24 @@
+<section class="auth-page">
+      <div class="card auth-card">
+        <a class="brand" routerLink="/"><span class="brand-mark">J</span><span>Jobzen AI</span></a>
+        <h1>Welcome back</h1>
+        <p class="muted-text">Sign in to your Jobzen workspace.</p>
+        <form class="form-stack" (ngSubmit)="submit()">
+          <div class="segmented">
+            <button type="button" [class.active]="role === 'recruiter'" (click)="role = 'recruiter'">Recruiter</button>
+            <button type="button" [class.active]="role === 'candidate'" (click)="role = 'candidate'">Candidate</button>
+            <button type="button" [class.active]="role === 'admin'" (click)="role = 'admin'">Admin</button>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required [value]="role + '@jobzen.ai'">
+          </div>
+          <div>
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" required value="demo1234">
+          </div>
+          <button class="btn block" type="submit">Sign in</button>
+        </form>
+        <p class="muted-text">New to Jobzen? <a routerLink="/register">Create an account</a></p>
+      </div>
+    </section>

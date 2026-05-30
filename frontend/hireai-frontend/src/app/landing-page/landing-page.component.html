@@ -1,0 +1,210 @@
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" routerLink="/">
+      <span class="brand-mark">H</span>
+      <span>HireAI</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#why">Why HireAI</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="login-link" routerLink="/login">Log in</a>
+      <a class="btn btn-sm" routerLink="/register">Get started <span>+</span></a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container hero-inner">
+      <span class="eyebrow">Now with explainable AI matching</span>
+      <h1>AI-powered hiring <span>made smarter.</span></h1>
+      <p class="lead">
+        HireAI is the modern recruitment platform that matches the right people to the
+        right roles with intelligent sourcing, interviews and analytics built for
+        high-performing teams.
+      </p>
+      <div class="hero-actions">
+        <a class="btn" routerLink="/register">Start free <span>+</span></a>
+        <a class="btn btn-secondary" href="#features">See how it works</a>
+      </div>
+      <p class="fine-print">No credit card - 14-day Pro trial - Cancel anytime</p>
+
+      <div class="dashboard">
+        <div class="browser-bar">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          <span>hireai.com/recruiter</span>
+        </div>
+        <div class="dashboard-grid">
+          <div class="analytics">
+            <div class="metric-row">
+              <div class="metric" *ngFor="let metric of heroMetrics">
+                <span>{{ metric.label }}</span>
+                <strong>{{ metric.value }}</strong>
+              </div>
+            </div>
+            <div class="chart-card">
+              <div>
+                <span>Applications</span>
+                <strong>Last 6 months</strong>
+              </div>
+              <span class="growth">+38%</span>
+              <div class="chart-bars">
+                <span class="bar-24"></span>
+                <span class="bar-36"></span>
+                <span class="bar-32"></span>
+                <span class="bar-48"></span>
+                <span class="bar-56"></span>
+                <span class="bar-74"></span>
+              </div>
+            </div>
+          </div>
+          <div class="candidate-list">
+            <div class="candidate" *ngFor="let candidate of candidates">
+              <span class="avatar">{{ candidate.initials }}</span>
+              <span>
+                <strong>{{ candidate.name }}</strong>
+                <small>{{ candidate.role }}</small>
+              </span>
+              <b>{{ candidate.score }}</b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust-strip">
+    <div class="container">
+      <p>TRUSTED BY HIRING TEAMS AT</p>
+      <div class="logo-row">
+        <span *ngFor="let logo of logos">{{ logo }}</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="badge">Platform</span>
+        <h2>Everything modern hiring teams need</h2>
+        <p>One platform for sourcing, screening, interviewing and analytics - powered by explainable AI.</p>
+      </div>
+      <div class="card-grid">
+        <article class="feature-card" *ngFor="let feature of features">
+          <span class="icon-tile">{{ feature.icon }}</span>
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.desc }}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="why" class="stats-section">
+    <div class="container stats-grid">
+      <div class="stat" *ngFor="let stat of stats">
+        <strong>{{ stat.value }}</strong>
+        <span>{{ stat.label }}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="badge">Loved by teams</span>
+        <h2>Recruiters and candidates choose HireAI</h2>
+      </div>
+      <div class="testimonial-grid">
+        <article class="testimonial-card" *ngFor="let testimonial of testimonials">
+          <div class="stars">*****</div>
+          <p>"{{ testimonial.quote }}"</p>
+          <div class="person">
+            <span class="avatar">{{ testimonial.initials }}</span>
+            <span>
+              <strong>{{ testimonial.name }}</strong>
+              <small>{{ testimonial.role }}</small>
+            </span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="section pricing-section">
+    <div class="container">
+      <div class="section-head">
+        <span class="badge">Pricing</span>
+        <h2>Simple, transparent pricing</h2>
+        <p>Start free. Upgrade when you're ready. Cancel anytime.</p>
+      </div>
+      <div class="pricing-grid">
+        <article class="pricing-card" *ngFor="let plan of pricing" [class.featured]="plan.featured">
+          <span class="popular" *ngIf="plan.featured">Most popular</span>
+          <h3>{{ plan.name }}</h3>
+          <div class="price">{{ plan.price }}<span>{{ plan.period }}</span></div>
+          <p>{{ plan.desc }}</p>
+          <ul>
+            <li *ngFor="let item of plan.features">{{ item }}</li>
+          </ul>
+          <a class="btn" [class.btn-secondary]="!plan.featured" routerLink="/register">{{ plan.cta }}</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="section faq-section">
+    <div class="container narrow">
+      <div class="section-head">
+        <span class="badge">FAQ</span>
+        <h2>Frequently asked questions</h2>
+      </div>
+      <div class="faq-list">
+        <details *ngFor="let item of faqs">
+          <summary>{{ item.q }}</summary>
+          <p>{{ item.a }}</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-band">
+        <div>
+          <h2>Ready to hire smarter?</h2>
+          <p>Join thousands of teams using HireAI to find the right talent - faster.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="btn btn-light" routerLink="/register">Start free trial</a>
+          <a class="btn btn-outline" routerLink="/login">Sign in</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <a class="brand" routerLink="/">
+        <span class="brand-mark">H</span>
+        <span>HireAI</span>
+      </a>
+      <p>AI-powered hiring made smarter. Built for modern recruiting teams.</p>
+    </div>
+    <div *ngFor="let group of footerLinks">
+      <h3>{{ group.title }}</h3>
+      <a *ngFor="let link of group.links" href="#">{{ link }}</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 HireAI Inc. All rights reserved.</span>
+    <span>Privacy &nbsp; Terms &nbsp; Security</span>
+  </div>
+</footer>
