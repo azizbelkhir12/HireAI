@@ -1,0 +1,22 @@
+<section class="auth-page">
+      <div class="card auth-card">
+        <a class="brand" routerLink="/"><span class="brand-mark">J</span><span>Jobzen AI</span></a>
+        <h1>Create your account</h1>
+        <p class="muted-text">Join Jobzen AI in less than a minute.</p>
+        <form class="form-stack" (ngSubmit)="submit()">
+          <div class="segmented two">
+            <button type="button" [class.active]="role === 'candidate'" (click)="role = 'candidate'">Candidate</button>
+            <button type="button" [class.active]="role === 'recruiter'" (click)="role = 'recruiter'">Recruiter</button>
+          </div>
+          <div class="form-row">
+            <div><label for="firstName">First name</label><input id="firstName" name="firstName" required [(ngModel)]="formData.firstName"></div>
+            <div><label for="lastName">Last name</label><input id="lastName" name="lastName" required [(ngModel)]="formData.lastName"></div>
+          </div>
+          <div *ngIf="role === 'recruiter'"><label for="company">Company</label><input id="company" name="company" placeholder="Acme Corp" [(ngModel)]="formData.company"></div>
+          <div><label for="email">Work email</label><input id="email" name="email" type="email" required placeholder="you@company.com" [(ngModel)]="formData.email"></div>
+          <div><label for="password">Password</label><input id="password" name="password" type="password" required placeholder="At least 8 characters" [(ngModel)]="formData.password"></div>
+          <button class="btn block" type="submit">Create account</button>
+        </form>
+        <p class="muted-text">Already have an account? <a routerLink="/login">Sign in</a></p>
+      </div>
+    </section>

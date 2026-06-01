@@ -1,24 +1,63 @@
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" routerLink="/">
+      <span class="brand-mark">H</span>
+      <span>HireAI</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#why">Why HireAI</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="login-link" routerLink="/login">Log in</a>
+      <a class="btn btn-sm" routerLink="/register">Get started <span>+</span></a>
+    </div>
+  </div>
+</header>
+
 <section class="auth-page">
-      <div class="card auth-card">
-        <a class="brand" routerLink="/"><span class="brand-mark">J</span><span>Jobzen AI</span></a>
-        <h1>Welcome back</h1>
-        <p class="muted-text">Sign in to your Jobzen workspace.</p>
-        <form class="form-stack" (ngSubmit)="submit()">
-          <div class="segmented">
-            <button type="button" [class.active]="role === 'recruiter'" (click)="role = 'recruiter'">Recruiter</button>
-            <button type="button" [class.active]="role === 'candidate'" (click)="role = 'candidate'">Candidate</button>
-            <button type="button" [class.active]="role === 'admin'" (click)="role = 'admin'">Admin</button>
-          </div>
-          <div>
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" required [value]="role + '@jobzen.ai'">
-          </div>
-          <div>
-            <label for="password">Password</label>
-            <input id="password" name="password" type="password" required value="demo1234">
-          </div>
-          <button class="btn block" type="submit">Sign in</button>
-        </form>
-        <p class="muted-text">New to Jobzen? <a routerLink="/register">Create an account</a></p>
+  <div class="card auth-card">
+    <a class="brand" routerLink="/"><span class="brand-mark">H</span><span>HireAI</span></a>
+    <h1>Welcome back</h1>
+    <p class="muted-text">Sign in to your HireAI workspace.</p>
+    <form class="form-stack" (ngSubmit)="submit()">
+      <div class="segmented">
+        <button type="button" [class.active]="role === 'recruiter'" (click)="role = 'recruiter'">Recruiter</button>
+        <button type="button" [class.active]="role === 'candidate'" (click)="role = 'candidate'">Candidate</button>
+        <button type="button" [class.active]="role === 'admin'" (click)="role = 'admin'">Admin</button>
       </div>
-    </section>
+      <div>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required [value]="role + '@hireai.ai'">
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" required value="demo1234">
+      </div>
+      <button class="btn block" type="submit">Sign in</button>
+    </form>
+    <p class="muted-text">New to HireAI? <a routerLink="/register">Create an account</a></p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <a class="brand" routerLink="/">
+        <span class="brand-mark">H</span>
+        <span>HireAI</span>
+      </a>
+      <p>AI-powered hiring made smarter. Built for modern recruiting teams.</p>
+    </div>
+    <div *ngFor="let group of footerLinks">
+      <h3>{{ group.title }}</h3>
+      <a *ngFor="let link of group.links" href="#">{{ link }}</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 HireAI Inc. All rights reserved.</span>
+    <span>Privacy &nbsp; Terms &nbsp; Security</span>
+  </div>
+</footer>

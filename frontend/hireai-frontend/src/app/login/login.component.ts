@@ -10,6 +10,7 @@ import { Role } from '../data';
 })
 export class LoginComponent {
   role: Role = 'recruiter';
+footerLinks: any;
 
   constructor(private readonly router: Router) {}
 
