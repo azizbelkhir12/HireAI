@@ -1,9 +1,34 @@
 <section class="auth-page">
-      <div class="card auth-card">
-        <a class="brand" routerLink="/"><span class="brand-mark">J</span><span>Jobzen AI</span></a>
-        <h1>Verify your email</h1>
-        <p class="muted-text">We sent a verification link to your inbox. The link expires in 24 hours.</p>
-        <a class="btn block" routerLink="/login">Continue to sign in</a>
-        <p class="muted-text">Wrong email? <a routerLink="/register">Sign up again</a></p>
+  <div class="card auth-card">
+    <a class="brand" routerLink="/"><span class="brand-mark">H</span><span>HireAI</span></a>
+    <h1>Verify Email</h1>
+
+    <p class="muted-text">
+      Enter the 6-digit code sent to
+      {{ email }}
+    </p>
+
+    <form (ngSubmit)="verifyOtp()" class="form-stack">
+      <div>
+        <label for="otp">Verification code</label>
+        <input
+          id="otp"
+          type="text"
+          maxlength="6"
+          [(ngModel)]="otp"
+          name="otp"
+          placeholder="Enter OTP"
+          required
+        />
       </div>
-    </section>
+
+      <button class="btn block" type="submit" [disabled]="isLoading">
+        {{ isLoading ? 'Verifying...' : 'Verify Account' }}
+      </button>
+    </form>
+
+    <p class="muted-text">
+      Wrong email? <a routerLink="/register">Create your account again</a>
+    </p>
+  </div>
+</section>

@@ -1,22 +1,76 @@
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" routerLink="/">
+      <span class="brand-mark">H</span>
+      <span>HireAI</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#why">Why HireAI</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="login-link" routerLink="/login">Log in</a>
+      <a class="btn btn-sm" routerLink="/register">Get started <span>+</span></a>
+    </div>
+  </div>
+</header>
+
 <section class="auth-page">
-      <div class="card auth-card">
-        <a class="brand" routerLink="/"><span class="brand-mark">J</span><span>Jobzen AI</span></a>
-        <h1>Create your account</h1>
-        <p class="muted-text">Join Jobzen AI in less than a minute.</p>
-        <form class="form-stack" (ngSubmit)="submit()">
-          <div class="segmented two">
-            <button type="button" [class.active]="role === 'candidate'" (click)="role = 'candidate'">Candidate</button>
-            <button type="button" [class.active]="role === 'recruiter'" (click)="role = 'recruiter'">Recruiter</button>
-          </div>
-          <div class="form-row">
-            <div><label for="firstName">First name</label><input id="firstName" name="firstName" required [(ngModel)]="formData.firstName"></div>
-            <div><label for="lastName">Last name</label><input id="lastName" name="lastName" required [(ngModel)]="formData.lastName"></div>
-          </div>
-          <div *ngIf="role === 'recruiter'"><label for="company">Company</label><input id="company" name="company" placeholder="Acme Corp" [(ngModel)]="formData.company"></div>
-          <div><label for="email">Work email</label><input id="email" name="email" type="email" required placeholder="you@company.com" [(ngModel)]="formData.email"></div>
-          <div><label for="password">Password</label><input id="password" name="password" type="password" required placeholder="At least 8 characters" [(ngModel)]="formData.password"></div>
-          <button class="btn block" type="submit">Create account</button>
-        </form>
-        <p class="muted-text">Already have an account? <a routerLink="/login">Sign in</a></p>
+  <div class="card auth-card">
+    <a class="brand" routerLink="/"><span class="brand-mark">H</span><span>HireAI</span></a>
+    <h1>Create your account</h1>
+    <p class="muted-text">Join HireAI in less than a minute.</p>
+    <form class="form-stack" (ngSubmit)="submit()">
+      <div class="segmented two">
+        <button type="button" [class.active]="role === 'candidate'" (click)="role = 'candidate'">Candidate</button>
+        <button type="button" [class.active]="role === 'recruiter'" (click)="role = 'recruiter'">Recruiter</button>
       </div>
-    </section>
+      <div class="form-row">
+        <div>
+          <label for="firstName">First name</label>
+          <input id="firstName" name="firstName" required [(ngModel)]="formData.firstName">
+        </div>
+        <div>
+          <label for="lastName">Last name</label>
+          <input id="lastName" name="lastName" required [(ngModel)]="formData.lastName">
+        </div>
+      </div>
+      <div *ngIf="role === 'recruiter'">
+        <label for="company">Company</label>
+        <input id="company" name="company" placeholder="Acme Corp" [(ngModel)]="formData.company">
+      </div>
+      <div>
+        <label for="email">Work email</label>
+        <input id="email" name="email" type="email" required placeholder="you@company.com" [(ngModel)]="formData.email">
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" required placeholder="At least 8 characters" [(ngModel)]="formData.password">
+      </div>
+      <button class="btn block" type="submit">Create account</button>
+    </form>
+    <p class="muted-text">Already have an account? <a routerLink="/login">Sign in</a></p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <a class="brand" routerLink="/">
+        <span class="brand-mark">H</span>
+        <span>HireAI</span>
+      </a>
+      <p>AI-powered hiring made smarter. Built for modern recruiting teams.</p>
+    </div>
+    <div *ngFor="let group of footerLinks">
+      <h3>{{ group.title }}</h3>
+      <a *ngFor="let link of group.links" href="#">{{ link }}</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 HireAI Inc. All rights reserved.</span>
+    <span>Privacy &nbsp; Terms &nbsp; Security</span>
+  </div>
+</footer>
