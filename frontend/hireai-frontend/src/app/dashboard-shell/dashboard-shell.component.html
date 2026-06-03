@@ -1,0 +1,49 @@
+<div class="dashboard">
+  <aside class="sidebar">
+    <a class="brand" href="/">
+      <span class="brand-mark">J</span>
+      <span>Jobzen AI</span>
+    </a>
+    <div class="workspace-badge badge">{{ role }} workspace</div>
+    <nav>
+      <a
+        *ngFor="let item of nav"
+        class="side-link"
+        [href]="item.path"
+      >
+        <span>{{ item.label }}</span>
+      </a>
+    </nav>
+    <div class="profile-mini">
+      <span class="avatar">{{ me.initials }}</span>
+      <div>
+        <strong>{{ me.name }}</strong>
+        <div class="muted-text">{{ me.email }}</div>
+      </div>
+    </div>
+  </aside>
+
+  <section class="main">
+    <header class="topbar">
+      <input
+        aria-label="Search"
+        placeholder="Search candidates, jobs, companies..."
+      />
+      <div class="toolbar">
+        <a class="btn secondary small" href="/login">Sign out</a>
+      </div>
+    </header>
+
+    <div class="page-head">
+      <div>
+        <h1>{{ title }}</h1>
+        <p *ngIf="description" class="muted-text">{{ description }}</p>
+      </div>
+      <ng-content select="[actions]"></ng-content>
+    </div>
+
+    <main class="content">
+      <ng-content></ng-content>
+    </main>
+  </section>
+</div>

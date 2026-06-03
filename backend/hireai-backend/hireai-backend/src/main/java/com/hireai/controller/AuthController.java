@@ -1,8 +1,6 @@
 package com.hireai.controller;
 
-import com.hireai.dto.AuthResponse;
-import com.hireai.dto.OtpVerificationRequest;
-import com.hireai.dto.RegisterRequest;
+import com.hireai.dto.*;
 import com.hireai.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +35,11 @@ public class AuthController {
         return ResponseEntity.ok(
                 authService.verifyOtp(request)
         );
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        return ResponseEntity.ok(authService.login(request)) ;
     }
 
     @ExceptionHandler(RuntimeException.class)

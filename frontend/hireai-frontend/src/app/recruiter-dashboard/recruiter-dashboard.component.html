@@ -1,0 +1,57 @@
+<app-dashboard-shell role="recruiter" title="Recruiter Dashboard" description="Track your jobs, applicants and interviews.">
+      <div actions><a class="btn" routerLink="/recruiter/jobs">Post a job</a></div>
+
+      <div class="grid four">
+        <app-stat-card *ngFor="let stat of stats" [label]="stat.label" [value]="stat.value" [delta]="stat.delta"></app-stat-card>
+      </div>
+
+      <div class="grid two dashboard-section">
+        <article class="card">
+          <h2>Hiring analytics</h2>
+          <div class="chart-bars">
+            <span *ngFor="let value of chart" [style.height.%]="value"></span>
+          </div>
+        </article>
+        <article class="card">
+          <span class="badge">Top match</span>
+          <h2>{{ top.name }}</h2>
+          <p class="muted-text">{{ top.role }}</p>
+          <div class="stat-value">{{ top.match }}%</div>
+          <div class="pill-row">
+            <span class="pill" *ngFor="let skill of top.skills">{{ skill }}</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="grid two dashboard-section">
+        <article class="card">
+          <h2>Top applicants</h2>
+          <div class="table-list">
+            <div class="list-item" *ngFor="let applicant of applicants">
+              <span class="avatar">{{ applicant.avatar }}</span>
+              <div class="grow"><strong>{{ applicant.name }}</strong><div class="muted-text">{{ applicant.role }}</div></div>
+              <span class="pill success">{{ applicant.match }}%</span>
+            </div>
+          </div>
+        </article>
+        <article class="card">
+          <h2>Upcoming interviews</h2>
+          <div class="table-list">
+            <div class="list-item" *ngFor="let interview of interviews">
+              <div class="grow"><strong>{{ interview.candidate }} - {{ interview.role }}</strong><div class="muted-text">{{ interview.time }} - {{ interview.stage }}</div></div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <article class="card dashboard-section">
+        <h2>Your active jobs</h2>
+        <div class="grid three">
+          <div class="card compact" *ngFor="let job of jobs">
+            <strong>{{ job.title }}</strong>
+            <p class="muted-text">{{ job.location }} - {{ job.type }}</p>
+            <span class="pill">{{ job.applicants }} applicants</span>
+          </div>
+        </div>
+      </article>
+    </app-dashboard-shell>

@@ -24,17 +24,17 @@
     <p class="muted-text">Sign in to your HireAI workspace.</p>
     <form class="form-stack" (ngSubmit)="submit()">
       <div class="segmented">
-        <button type="button" [class.active]="role === 'recruiter'" (click)="role = 'recruiter'">Recruiter</button>
-        <button type="button" [class.active]="role === 'candidate'" (click)="role = 'candidate'">Candidate</button>
-        <button type="button" [class.active]="role === 'admin'" (click)="role = 'admin'">Admin</button>
+        <button type="button" [class.active]="role === 'RECRUITER'" (click)="role = 'RECRUITER'">Recruiter</button>
+        <button type="button" [class.active]="role === 'CANDIDATE'" (click)="role = 'CANDIDATE'">Candidate</button>
+        <button type="button" [class.active]="role === 'ADMIN'" (click)="role = 'ADMIN'">Admin</button>
       </div>
       <div>
         <label for="email">Email</label>
-        <input id="email" name="email" type="email" required [value]="role + '@hireai.ai'">
+        <input id="email" name="email" type="email" required [(ngModel)]="formData.email">
       </div>
       <div>
         <label for="password">Password</label>
-        <input id="password" name="password" type="password" required value="demo1234">
+        <input id="password" name="password" type="password" required [(ngModel)]="formData.password">
       </div>
       <button class="btn block" type="submit">Sign in</button>
     </form>

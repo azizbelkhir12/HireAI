@@ -1,8 +1,6 @@
 package com.hireai.service;
 
-import com.hireai.dto.AuthResponse;
-import com.hireai.dto.OtpVerificationRequest;
-import com.hireai.dto.RegisterRequest;
+import com.hireai.dto.*;
 import com.hireai.entity.PendingUser;
 import com.hireai.entity.User;
 import com.hireai.enums.Role;
@@ -24,6 +22,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+    private final JwtService jwtService;
 
     public AuthResponse register(
             RegisterRequest request
@@ -174,5 +173,29 @@ public class AuthService {
         return new AuthResponse(
                 "Email verified"
         );
+    }
+
+    public LoginResponse login (LoginRequest request) {
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Invalid email or password"
+                        ));
+        if(!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new RuntimeException("Invalid email or password ") ;
+        }
+        if (!user.isVerified()) {
+            throw  new RuntimeException("Email not verified");
+        }
+
+        String token = jwtService.generateToken(user.getEmail(), user.getRole().name()) ;
+
+
+        return LoginResponse.builder()
+                .token(token)
+                .role(user.getRole().name())
+                .firstName(user.getFirstName())
+                .email(user.getEmail())
+                .build() ; 
     }
 }

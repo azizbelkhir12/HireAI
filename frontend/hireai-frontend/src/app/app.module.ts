@@ -10,6 +10,11 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import { RecruiterDashboardComponent } from './recruiter-dashboard/recruiter-dashboard.component';
+import { CandidateDashboardComponent } from './candidate-dashboard/candidate-dashboard.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { DashboardShellComponent } from './dashboard-shell/dashboard-shell.component';
+import { StatCardComponent } from './stat-card/stat-card.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +22,12 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
     LandingPageComponent,
     LoginComponent,
     RegisterComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    RecruiterDashboardComponent,
+    CandidateDashboardComponent,
+    AdminDashboardComponent,
+    DashboardShellComponent,
+    StatCardComponent
   ],
   imports: [
     BrowserModule,

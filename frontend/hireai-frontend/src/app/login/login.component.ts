@@ -1,20 +1,51 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Role } from '../data';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: false,
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  role: Role = 'recruiter';
-footerLinks: any;
+  role: 'RECRUITER' | 'CANDIDATE' | 'ADMIN' = 'RECRUITER';
 
-  constructor(private readonly router: Router) {}
+  footerLinks: any;
+
+  formData = {
+    email: '',
+    password: '',
+  };
+
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+  ) {}
 
   submit(): void {
-    void this.router.navigate([this.role === 'admin' ? '/admin' : this.role === 'recruiter' ? '/recruiter' : '/candidate']);
+    this.authService.login(this.formData).subscribe({
+      next: (response: any) => {
+        this.authService.saveToken(response.token);
+
+        const role = response.role.toLowerCase();
+
+        if (role === 'admin') {
+          console.log('Navigating to admin dashboard');
+          //this.router.navigate(['/admin']);
+        } else if (role === 'recruiter') {
+          console.log('Navigating to recruiter dashboard');
+          //this.router.navigate(['/recruiter']);
+        } else {
+          console.log('Navigating to candidate dashboard');
+          //this.router.navigate(['/candidate']);
+        }
+      },
+
+      error: (err) => {
+        alert(err?.error?.message || 'Login failed');
+      },
+    });
   }
 }
