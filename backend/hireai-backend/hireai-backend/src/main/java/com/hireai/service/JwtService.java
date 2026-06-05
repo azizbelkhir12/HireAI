@@ -11,6 +11,8 @@ import java.util.Date;
 @Service
 public class JwtService {
 
+    private static final int MIN_SECRET_LENGTH = 32;
+
     @Value("${jwt.secret}")
     private String secret;
 
@@ -22,11 +24,7 @@ public class JwtService {
             String role
     ) {
 
-        SecretKey key = Keys.hmacShaKeyFor(
-                secret.getBytes(
-                        StandardCharsets.UTF_8
-                )
-        );
+        SecretKey key = getSigningKey();
 
         return Jwts.builder()
                 .subject(email)
@@ -40,5 +38,19 @@ public class JwtService {
                 )
                 .signWith(key)
                 .compact();
+    }
+
+    private SecretKey getSigningKey() {
+        if(secret == null || secret.length() < MIN_SECRET_LENGTH) {
+            throw new IllegalStateException(
+                    "JWT secret must be at least 32 characters long"
+            );
+        }
+
+        return Keys.hmacShaKeyFor(
+                secret.getBytes(
+                        StandardCharsets.UTF_8
+                )
+        );
     }
 }

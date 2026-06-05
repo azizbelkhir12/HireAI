@@ -1,0 +1,35 @@
+<app-dashboard-shell role="recruiter" title="Recruiter Dashboard" description="Track your jobs, applicants and interviews.">
+      <div class="grid applicants-layout">
+        <aside class="card">
+          <button class="list-item candidate-button" *ngFor="let applicant of applicants" (click)="selected = applicant">
+            <span class="avatar">{{ applicant.avatar }}</span>
+            <span class="grow"><strong>{{ applicant.name }}</strong><span class="muted-text subline">{{ applicant.role }}</span></span>
+            <span class="pill success">{{ applicant.match }}%</span>
+          </button>
+        </aside>
+        <section class="grid">
+          <article class="card">
+            <div class="toolbar split-toolbar">
+              <div>
+                <span class="badge">Top match</span>
+                <h2>{{ selected.name }}</h2>
+                <p class="muted-text">{{ selected.role }} - San Francisco</p>
+              </div>
+              <div class="toolbar">
+                <button class="btn secondary">Message</button>
+                <button class="btn">Schedule interview</button>
+              </div>
+            </div>
+            <div class="pill-row">
+              <span class="pill" *ngFor="let skill of selected.skills">{{ skill }}</span>
+            </div>
+          </article>
+          <article class="card">
+            <h2>AI match score</h2>
+            <div class="stat-value">{{ selected.match }}%</div>
+            <div class="progress"><span [style.width.%]="selected.match"></span></div>
+            <p class="muted-text summary-note">{{ selected.name }} is a strong fit with recent experience matching the role requirements.</p>
+          </article>
+        </section>
+      </div>
+    </app-dashboard-shell>

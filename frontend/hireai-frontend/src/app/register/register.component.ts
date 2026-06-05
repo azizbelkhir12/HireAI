@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegisterService } from '../services/register.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -14,9 +15,15 @@ export class RegisterComponent {
   isLoading = false;
 
   footerLinks = [
-    { title: 'Product', links: ['Features', 'Pricing', 'Integrations', 'Changelog'] },
+    {
+      title: 'Product',
+      links: ['Features', 'Pricing', 'Integrations', 'Changelog'],
+    },
     { title: 'Company', links: ['About', 'Customers', 'Careers', 'Contact'] },
-    { title: 'Resources', links: ['Blog', 'Help center', 'Security', 'Status'] },
+    {
+      title: 'Resources',
+      links: ['Blog', 'Help center', 'Security', 'Status'],
+    },
   ];
 
   formData = {
@@ -39,7 +46,13 @@ export class RegisterComponent {
       !this.formData.firstName ||
       !this.formData.lastName
     ) {
-      alert('Please fill all fields');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Missing fields',
+        text: 'Please fill all fields',
+        confirmButtonText: 'OK',
+      });
+
       return;
     }
 
@@ -51,13 +64,17 @@ export class RegisterComponent {
     };
 
     this.registerService.register(payload).subscribe({
-      next: () => {
+      next: (response) => {
         this.isLoading = false;
 
-        this.router.navigate(['/verify-email'], {
-          queryParams: {
-            email: this.formData.email,
-          },
+        Swal.fire({
+          icon: 'success',
+          title: 'Registration successful',
+          text:
+            response?.message || 'Your account has been created successfully',
+          confirmButtonText: 'Go to Login',
+        }).then(() => {
+          this.router.navigate(['/login']);
         });
       },
 
@@ -66,7 +83,12 @@ export class RegisterComponent {
 
         console.error(err);
 
-        alert(err?.error?.message || 'Registration failed');
+        Swal.fire({
+          icon: 'error',
+          title: 'Registration failed',
+          text: err?.error?.message || 'Something went wrong',
+          confirmButtonText: 'Try Again',
+        });
       },
     });
   }

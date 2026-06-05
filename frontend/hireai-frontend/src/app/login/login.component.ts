@@ -36,7 +36,7 @@ export class LoginComponent {
           //this.router.navigate(['/admin']);
         } else if (role === 'recruiter') {
           console.log('Navigating to recruiter dashboard');
-          //this.router.navigate(['/recruiter']);
+          this.router.navigate(['/recruiter-dashboard']);
         } else {
           console.log('Navigating to candidate dashboard');
           //this.router.navigate(['/candidate']);

@@ -15,6 +15,7 @@ import { CandidateDashboardComponent } from './candidate-dashboard/candidate-das
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { DashboardShellComponent } from './dashboard-shell/dashboard-shell.component';
 import { StatCardComponent } from './stat-card/stat-card.component';
+import { RecruiterApplicantsComponent } from './recruiter-applicants/recruiter-applicants.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { StatCardComponent } from './stat-card/stat-card.component';
     CandidateDashboardComponent,
     AdminDashboardComponent,
     DashboardShellComponent,
-    StatCardComponent
+    StatCardComponent,
+    RecruiterApplicantsComponent
   ],
   imports: [
     BrowserModule,

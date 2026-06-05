@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.UUID;
@@ -21,118 +22,76 @@ public class AuthService {
     private final PendingUserRepository pendingUserRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final EmailService emailService;
     private final JwtService jwtService;
+    private final EmailService emailService;
 
-    public AuthResponse register(
-            RegisterRequest request
-    ) {
-        if(request.getEmail() == null) {
-            throw new RuntimeException(
-                    "Email is required"
-            );
+    private static final SecureRandom secureRandom =
+            new SecureRandom();
+
+    public AuthResponse register(RegisterRequest request) {
+        if (request.getEmail() == null) {
+            throw new RuntimeException("Email is required");
         }
 
         String email = request.getEmail().trim().toLowerCase();
 
-        if(userRepository.existsByEmail(
-                email
-        )) {
-
-            throw new RuntimeException(
-                    "Email already exists"
-            );
+        if (userRepository.existsByEmail(email)) {
+            throw new RuntimeException("Email already exists");
         }
 
-        String otp = String.format(
-                "%06d",
-                new Random().nextInt(1_000_000)
-        );
+        User user = User.builder()
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .email(email)
+                .password(passwordEncoder.encode(request.getPassword()))
+                .company(request.getCompany())
+                .role(Role.valueOf(request.getRole()))
+                .verified(true)
+                .build();
 
-        PendingUser pendingUser =
-                pendingUserRepository
-                        .findByEmail(email)
-                        .orElseGet(PendingUser::new);
+        userRepository.save(user);
 
-        pendingUser.setFirstName(request.getFirstName());
-        pendingUser.setLastName(request.getLastName());
-        pendingUser.setEmail(email);
-        pendingUser.setPassword(passwordEncoder.encode(request.getPassword()));
-        pendingUser.setCompany(request.getCompany());
-        pendingUser.setRole(
-                Role.valueOf(
-                        request.getRole()
-                )
-        );
-        pendingUser.setOtpCode(otp);
-        pendingUser.setOtpExpiration(LocalDateTime.now().plusMinutes(10));
-        pendingUser.setOtpAttempts(0);
-
-        pendingUserRepository.save(
-                pendingUser
-        );
-
-        emailService.sendOtpEmail(
-                email,
-                otp
-        );
-
-        return new AuthResponse(
-                "OTP sent to email"
-        );
+        return new AuthResponse("User registered successfully");
     }
 
     public AuthResponse verifyOtp(
             OtpVerificationRequest request
     ) {
-        if(request.getEmail() == null || request.getOtp() == null) {
-            throw new RuntimeException(
-                    "Email and OTP are required"
-            );
-        }
 
-        String email = request.getEmail().trim().toLowerCase();
-        String otp = request.getOtp().trim();
+        String email =
+                request.getEmail()
+                        .trim()
+                        .toLowerCase();
 
         PendingUser pendingUser =
                 pendingUserRepository
-                        .findByEmail(
-                                email
-                        )
+                        .findByEmail(email)
                         .orElseThrow(() ->
                                 new RuntimeException(
-                                        "User not found"
-                                ));
+                                        "Pending registration not found"
+                                )
+                        );
 
-        if(pendingUser
-                .getOtpExpiration()
-                .isBefore(
-                        LocalDateTime.now()
-                )) {
+        if (pendingUser.getOtpAttempts() >= 5) {
+            throw new RuntimeException(
+                    "Maximum OTP attempts exceeded"
+            );
+        }
 
+        if (LocalDateTime.now().isAfter(
+                pendingUser.getOtpExpiration()
+        )) {
             throw new RuntimeException(
                     "OTP expired"
             );
         }
 
-        int otpAttempts =
-                pendingUser.getOtpAttempts() == null
-                        ? 0
-                        : pendingUser.getOtpAttempts();
-
-        if(otpAttempts >= 5) {
-
-            throw new RuntimeException(
-                    "Too many attempts"
-            );
-        }
-
-        if(!pendingUser
-                .getOtpCode()
-                .equals(otp)) {
+        if (!pendingUser.getOtpCode().equals(
+                request.getOtp()
+        )) {
 
             pendingUser.setOtpAttempts(
-                    otpAttempts + 1
+                    pendingUser.getOtpAttempts() + 1
             );
 
             pendingUserRepository.save(
@@ -168,15 +127,23 @@ public class AuthService {
 
         userRepository.save(user);
 
-        pendingUserRepository.delete(pendingUser);
+        pendingUserRepository.delete(
+                pendingUser
+        );
 
         return new AuthResponse(
-                "Email verified"
+                "Email verified successfully"
         );
     }
 
     public LoginResponse login (LoginRequest request) {
-        User user = userRepository.findByEmail(request.getEmail())
+        if(request.getEmail() == null || request.getPassword() == null) {
+            throw new RuntimeException("Email and password are required");
+        }
+
+        String email = request.getEmail().trim().toLowerCase();
+
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() ->
                         new RuntimeException(
                                 "Invalid email or password"
@@ -197,5 +164,53 @@ public class AuthService {
                 .firstName(user.getFirstName())
                 .email(user.getEmail())
                 .build() ; 
+    }
+
+    public AuthResponse resendOtp(
+            String email
+    ) {
+
+        PendingUser pendingUser =
+                pendingUserRepository
+                        .findByEmail(
+                                email.trim()
+                                        .toLowerCase()
+                        )
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "No pending registration found"
+                                )
+                        );
+
+        String otp = String.format(
+                "%06d",
+                secureRandom.nextInt(1_000_000)
+        );
+
+        pendingUser.setOtpCode(
+                otp
+        );
+
+        pendingUser.setOtpExpiration(
+                LocalDateTime.now()
+                        .plusMinutes(10)
+        );
+
+        pendingUser.setOtpAttempts(
+                0
+        );
+
+        pendingUserRepository.save(
+                pendingUser
+        );
+
+        emailService.sendOtpEmail(
+                pendingUser.getEmail(),
+                otp
+        );
+
+        return new AuthResponse(
+                "OTP resent successfully"
+        );
     }
 }

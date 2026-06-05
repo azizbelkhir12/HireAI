@@ -1,5 +1,6 @@
 package com.hireai.service;
 
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -11,29 +12,18 @@ public class EmailService {
 
     private final JavaMailSender mailSender;
 
-    public void sendOtpEmail(
-            String email,
-            String otp
-    ) {
+    public void sendOtpEmail(String email, String otp) {
 
-        SimpleMailMessage message =
-                new SimpleMailMessage();
-
-        message.setFrom(
-                "mouhamedazizbelkhir20@gmail.com"
-        );
-
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("mouhamedazizbelkhir20@gmail.com");
         message.setTo(email);
-
-        message.setSubject(
-                "Verify your HireAI account"
-        );
+        message.setSubject("HireAI Email Verification");
 
         message.setText(
-                "Welcome to HireAI!\n\n" +
-                        "Your verification code is:\n\n"
-                        + otp +
-                        "\n\nThis code expires in 10 minutes."
+                "Hello,\n\n" +
+                        "Your OTP verification code is: " + otp +
+                        "\n\nThis code expires in 10 minutes.\n\n" +
+                        "HireAI Team"
         );
 
         mailSender.send(message);
