@@ -1,0 +1,154 @@
+.grid {
+  display: grid;
+  gap: 18px;
+}
+
+.applicants-layout {
+  grid-template-columns: minmax(240px, 320px) 1fr;
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+  padding: 22px;
+}
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.split-toolbar {
+  justify-content: space-between;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0 16px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 700;
+}
+
+.btn.secondary {
+  border-color: var(--border);
+  background: var(--card);
+  color: var(--foreground);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--primary);
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.muted-text {
+  color: var(--muted-foreground);
+}
+
+.subline {
+  display: block;
+}
+
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 9px;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pill.success {
+  border-color: rgba(22, 163, 106, 0.22);
+  background: rgba(22, 163, 106, 0.1);
+  color: var(--success);
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  padding: 14px;
+}
+
+.candidate-button {
+  width: 100%;
+  text-align: left;
+}
+
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.avatar {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--primary);
+  font-weight: 900;
+}
+
+.stat-value {
+  color: var(--primary);
+  font-size: 34px;
+  font-weight: 900;
+}
+
+.progress {
+  overflow: hidden;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--muted);
+}
+
+.progress > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--primary), #19b5a5);
+}
+
+.summary-note {
+  margin-top: 16px;
+}
+
+@media (max-width: 900px) {
+  .applicants-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .list-item,
+  .split-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

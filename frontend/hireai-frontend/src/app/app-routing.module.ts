@@ -6,6 +6,7 @@ import { RegisterComponent } from './register/register.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { StatCardComponent } from './stat-card/stat-card.component';
 import { RecruiterDashboardComponent } from './recruiter-dashboard/recruiter-dashboard.component';
+import { RecruiterApplicantsComponent } from './recruiter-applicants/recruiter-applicants.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path : 'register', component: RegisterComponent },
   { path: 'verify-email', component: VerifyEmailComponent },
-  {path : 'recruiter-dashboard', component: RecruiterDashboardComponent}
+  { path : 'recruiter-dashboard', component: RecruiterDashboardComponent},
+  { path: 'recruiter-applicants', component: RecruiterApplicantsComponent },
   
 ];
 
